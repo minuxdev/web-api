@@ -45,4 +45,19 @@ class Magnetdl():
         for link in self.magnet:
             magenet_info.append(link.a["href"])
 
-        return title_info, size_info, magenet_info
+        return title_info, magenet_info, size_info
+
+
+def get(key):
+    json = []
+    mg = Magnetdl(key)
+    title, magnet, size = mg.get_info()
+
+    try:    
+        for i in range(len(title)):
+            json.append({"title": title[i],"size": size[i],
+            "magenet": magnet[i]})
+    except:
+        pass
+
+    return json
