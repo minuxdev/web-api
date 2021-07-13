@@ -24,13 +24,12 @@ class KickAss(Resource):
 		return self.json
 
 
-# @app.route("/mydata/<key>/")
+@app.route("/mydata/<key>/")
 def magnetdl(key):
 	data = get(key)
 
 	return json.dumps(data)
-
-app.add_url_rule("/mydata/<string:key>/", "mydata", magnetdl) 
+	
 
 api.add_resource(KickAss, "/kickcine/<string:keyword>/")
 
