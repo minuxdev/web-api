@@ -2,7 +2,7 @@ from magnetdl import Magnetdl
 from flask import Flask
 from flask_restplus import Api, Resource
 from kick import paging
-from magnetdl import get
+#from magnetdl import get
 import json
 
 
@@ -24,7 +24,7 @@ class KickAss(Resource):
 		return self.json
 
 
-@app.route("/mydata/<key>/")
+#@app.route("/mydata/<key>/")
 def magnetdl(key):
 	data = get(key)
 
