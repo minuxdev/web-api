@@ -1,1 +1,1 @@
-web: gunicorn end_points:app 
+web: gunicorn end_points:app --log-file -
