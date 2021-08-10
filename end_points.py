@@ -31,8 +31,8 @@ def magnetdl(key):
 	return json.dumps(data)
 	
 
-api.add_resource(KickAss, "/lusominux/<string:keyword>/")
+api.add_resource(KickAss, "/<string:keyword>/")
 
 if __name__ == "__main__":
-	app.run(debug=False)
+	app.run()
 	#app.run(debug=True)
