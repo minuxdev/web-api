@@ -79,3 +79,12 @@ def paging(key):
         seeds.extend(sd)
     
     return title, magnet, size, seeds
+
+
+def root():
+    url = "https://kat.sx/tv/"
+    news = KickAss(url=url)
+
+    title, magnet, size, seeds = news.colect_data()
+
+    return title, magnet, size, seeds

@@ -1,14 +1,16 @@
 from magnetdl import Magnetdl
-from flask import Flask
+from flask import Flask, render_template, redirect, url_for
 from flask_restplus import Api, Resource
-from kick import paging
+from kick import paging, root
 #from magnetdl import get
 import json
+from time import strftime
 
 
 app = Flask(__name__)
 api = Api(app)
 
+time = strftime("%Y-%M-%d %H:%M:%S")
 
 class KickAss(Resource):
 	def __init__(self, keyword):
@@ -23,16 +25,37 @@ class KickAss(Resource):
 		
 		return self.json
 
+def response(title, magnet, size, seeds):
+	jsonfile = []
 
-#@app.route("/mydata/<key>/")
-def magnetdl(key):
-	data = get(key)
+	for i in range(len(title)):
+		jsonfile.append({
+				"title": title[i],
+				"size": size[i],
+				"seeds": int(seeds[i]),
+				"magnet": magnet[i]
+		})
 
-	return json.dumps(data)
+	return jsonfile
+
+
+@app.route("/<keyword>/")
+def search(keyword):
+	title, magnet, size, seeds = paging(keyword)
+	jsonfile = response(title, magnet, size, seeds)
+	return render_template("db.html", data = jsonfile, time = time, 
+		_title = "Results")
+
+
+
+@app.route("/news")
+def index():
+	title, magnet, size, seeds = root()
+	jsonfile = response(title, magnet, size, seeds)
+
+	return render_template("db.html", data = jsonfile, time = time, _title = "News")
 	
 
-api.add_resource(KickAss, "/<string:keyword>/")
-
 if __name__ == "__main__":
-	app.run()
-	#app.run(debug=True)
+	# app.run()
+	app.run(debug=True)
