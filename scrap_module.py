@@ -60,7 +60,7 @@ class KickAss():
         return title, magnet, size, seeds
 
 
-def paging(key):
+def data_collector(url):
     
     title = list() 
     magnet = list()
@@ -68,7 +68,7 @@ def paging(key):
     seeds = list()
         
     for i in range(3):            
-        url = f"https://kat.sx/usearch/{key}/{i +1 }/"
+        url = f"{url}/{i +1 }/"
 
         k = KickAss(url)
         t, m, sz, sd = k.colect_data()
@@ -80,11 +80,21 @@ def paging(key):
     
     return title, magnet, size, seeds
 
+def json_maker(title, magnet, size, seeds):
+    jsonfile = []
 
-def root():
-    url = "https://kat.sx/tv/"
-    news = KickAss(url=url)
+    for i in range(len(title)):
+        jsonfile.append({
+                "title": title[i],
+                "size": size[i],
+                "seeds": int(seeds[i]),
+                "magnet": magnet[i]
+        })
 
-    title, magnet, size, seeds = news.colect_data()
+    return jsonfile
 
-    return title, magnet, size, seeds
+
+def returning_json(url):
+    title, magnet, size, seeds = data_collector(url)
+    jsonfile = json_maker(title, magnet, size, seeds)
+    return jsonfile
